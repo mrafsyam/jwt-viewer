@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JWT Decoder</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+		}
+
+		.container {
+			max-width: 95%;
+			margin: 5 auto;
+			padding: 20px;
+			display: flex;
+			flex-wrap: wrap;
+		}
+
+		.input-container {
+			flex: 1;
+			margin-right: 20px;
+		}
+
+		.output-container {
+			flex: 3;
+		}
+
+		h1 {
+			font-weight: bold;
+			margin-bottom: 3px;
+		}
+
+		label {
+			display: block;
+			margin-bottom: 3px;
+			font-weight: bold;
+			font-size: 8px !important;
+		}
+
+		input {
+			width: 100%;
+			padding: 10px;
+			margin-bottom: 20px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			font-size: 8px;
+		}
+		
+		.font {
+			color: blue;
+			border: 1px solid red;
+			font-size: 6px;
+		}
+
+		button {
+			background-color: #4CAF50;
+			color: white;
+			padding: 5px 10px;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			font-size: 8px;
+		}
+
+		button:hover {
+			background-color: #3e8e41;
+		}
+		
+		textarea {
+			width: 100%;
+			height: 100%;
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			font-size: 6px;
+		}
+		
+		.textarea-jwt {
+			width: 100%;
+			height: 150px;
+			font-size: 6px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="input-container">
+			<label for="jwt">JWT 1</label>
+			<textarea id="jwt" class="textarea-jwt" placeholder="Enter JWT token here..." oninput="decodeJwt()"></textarea>
+			<button onclick="decodeJwt()">Decode</button>
+		</div>
+		&nbsp;&nbsp;&nbsp;
+		<div class="output-container">
+			<label for="decoded">Decoded JWT 1</label>
+			<textarea id="decoded" readonly class="font" ></textarea>
+		</div>
+	</div>
+		<div class="container">
+		<div class="input-container">
+			<label for="jwt2">JWT 2</label>
+			<textarea id="jwt2" class="textarea-jwt" placeholder="Enter JWT token here..." oninput="decodeJwt2()"></textarea>
+			<button onclick="decodeJwt2()">Decode</button>
+		</div>
+		&nbsp;&nbsp;&nbsp;
+		<div class="output-container">
+			<label for="decoded2">Decoded JWT 2:</label>
+			<textarea id="decoded2" readonly class="font" ></textarea>
+		</div>
+	</div>
+
+	<script>
+		function decodeJwt() {
+			const jwtInput = document.getElementById("jwt");
+			const decodedOutput = document.getElementById("decoded");
+			const jwt = jwtInput.value.trim();
+
+			if (!jwt) {
+				alert("Please enter a JWT token.");
+				return;
+			}
+
+			const parts = jwt.split(".");
+			if (parts.length !== 3) {
+				alert("Invalid JWT token.");
+				return;
+			}
+
+			const header = JSON.parse(atob(parts[0]));
+			const payload = JSON.parse(atob(parts[1]));
+
+			const decoded = {
+				header,
+				payload
+			};
+
+			decodedOutput.value = JSON.stringify(decoded, null, 2);
+		}
+		
+		function decodeJwt2() {
+			const jwtInput = document.getElementById("jwt2");
+			const decodedOutput = document.getElementById("decoded2");
+			const jwt = jwtInput.value.trim();
+
+			if (!jwt) {
+				alert("Please enter a JWT token.");
+				return;
+			}
+
+			const parts = jwt.split(".");
+			if (parts.length !== 3) {
+				alert("Invalid JWT token.");
+				return;
+			}
+
+			const header = JSON.parse(atob(parts[0]));
+			const payload = JSON.parse(atob(parts[1]));
+
+			const decoded = {
+				header,
+				payload
+			};
+
+			decodedOutput.value = JSON.stringify(decoded, null, 2);
+		}
+	</script>
+</body>
+</html>
